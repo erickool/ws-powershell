@@ -7,4 +7,4 @@ Creating an AAD app object: https://azure.microsoft.com/en-us/documentation/arti
 The UW Groups Web Service documentation:
 https://wiki.cac.washington.edu/display/infra/Groups+Web+Service+REST+API
 
-These examples are provided as-is without warrentee of any kind.
+These examples are provided as-is without warrantee of any kind.
