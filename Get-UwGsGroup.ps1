@@ -20,6 +20,7 @@ Param([string]$group,
 $serviceHost = "https://iam-ws.u.washington.edu:7443"
 $serviceEndPoint = $serviceHost + "/group_sws/v2/"
 $uri = $serviceEndPoint + "group/" + $group
+$headers = @{"Accept"="application/xml;charset=UTF-8"}
 
 # locate the certificate that will be used to authenticate the GWS call
 $certSubjectMatch = 'CN=' + $certName + '*'
@@ -32,7 +33,7 @@ Write-Host "Making GWS call using certificate: $($cert.Subject)"
 Write-Host "Making call using URI: $uri"
 
 try {
-    $resp = Invoke-WebRequest -Method GET -uri $uri -certificate $cert -contentType "text/xml"
+    $resp = Invoke-WebRequest -Method GET -uri $uri -certificate $cert -Headers $headers
 }
 catch {
     Write-Error "Web request failed error: $($_.Exception)"
@@ -65,7 +66,7 @@ $memberElement = Select-Xml -Xml $xml1 -XPath "//*[@rel='members']" | select -ex
 #$memberElement.href
 $memberUri = $serviceHost + $memberElement.href
 Write-Host "Fetching membership using URI:" $memberUri
-$resp = Invoke-WebRequest -Method GET -uri $memberUri -certificate $cert -contentType "text/xml"
+$resp = Invoke-WebRequest -Method GET -uri $memberUri -certificate $cert -Headers $headers
 if ($resp.StatusCode -eq 200) {
     $xml = $resp.Content
     $xml1 = $xml.ChildNodes[1]
