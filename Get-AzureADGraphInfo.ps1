@@ -29,7 +29,7 @@ $oauth = Invoke-RestMethod -Method Post -Uri $loginURL/$tenantdomain/oauth2/toke
 
 if ($oauth.access_token -ne $null) {
     # the header values contain the OAuth access token and the content type
-    $headerParams = @{'Authorization'="$($oauth.token_type) $($oauth.access_token)"; "Content-Type"="application/json"}
+    $headerParams = @{'Authorization'="$($oauth.token_type) $($oauth.access_token)"; "Accept"="application/json"}
 
     # to find a specific group you can do an exact match filter, note the back-tick in front of the dollar sign
     $url = "https://graph.windows.net/$tenantdomain/groups?api-version=1.6&`$filter=displayName+eq+'u_kool_test1'"
@@ -38,7 +38,7 @@ if ($oauth.access_token -ne $null) {
 
     Write-Output "Fetching data using Uri: $url"
 
-    $groupInfo = Invoke-WebRequest -Headers $headerParams -Uri $url
+    $groupInfo = Invoke-WebRequest -Method Get -Headers $headerParams -Uri $url
 
     Write-Output "Returned object has type $($groupInfo.GetType().Name)"
     # trick to format JSON string from single line to indented, multi-line
