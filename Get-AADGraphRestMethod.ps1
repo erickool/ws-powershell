@@ -37,7 +37,7 @@ $oauth = Invoke-RestMethod -Method Post -Uri $loginURL/$tenantdomain/oauth2/toke
 
 if ($oauth.access_token -ne $null) {
     # the header values contain the OAuth access token and the content type
-    $headerParams = @{'Authorization'="$($oauth.token_type) $($oauth.access_token)"; "Content-Type"="application/xml"}
+    $headerParams = @{'Authorization'="$($oauth.token_type) $($oauth.access_token)"; "Accept"="application/json"}
 
     # using the 'ge' comparison operator doesn't work quite like a wildcard, instead finding all values that
     # are lexically greater
